@@ -36,6 +36,7 @@ class Q {
 }
 
 class Producer implements Runnable {
+
     Q q;
 
     Producer(Q q) {
@@ -58,6 +59,7 @@ class Producer implements Runnable {
 }
 
 class Consumer implements Runnable {
+
     Q q;
 
     Consumer(Q q) {
@@ -66,14 +68,20 @@ class Consumer implements Runnable {
     }
 
     public void run() {
-        while (true) {
-            q.get();
+        try {
+            while (true) {
+                q.get();
+                Thread.sleep(100);
+            }
+        } catch (InterruptedException ex) {
+            System.out.println("Прервано");
         }
     }
-    
+
 }
 
 public class JavaApplication3 {
+
     public static void main(String[] args) {
         Q q = new Q();
         new Producer(q);
